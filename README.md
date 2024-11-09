@@ -23,7 +23,7 @@ The data for this project was sourced from Kaggle. You can access the dataset [h
 
 ## Data Cleaning
 In this phase, I performed the following tasks:
-1. Imported the HR Data into MySQL Workbench using the Import Table Wizard
+1. Imported the Data into MySQL Workbench using the Import Table Wizard
 2. Checked for duplicate values
 3. Standardized the data
 
