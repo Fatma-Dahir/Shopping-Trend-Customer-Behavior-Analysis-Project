@@ -77,9 +77,9 @@ WHERE row_num = 1;
 - This SQL query returns the frequency of purchases across different age groups
 ```sql
 SELECT Age_Category, SUM(CASE WHEN FrequencyOf_Purchases = 'Weekly' THEN 1 ELSE 0 END) AS Weekly_Customers,
-					 SUM(CASE WHEN FrequencyOf_Purchases = 'Bi-Weekly' THEN 1 ELSE 0 END) AS Bi_Weekly_Customers,
+                     SUM(CASE WHEN FrequencyOf_Purchases = 'Bi-Weekly' THEN 1 ELSE 0 END) AS Bi_Weekly_Customers,
                      SUM(CASE WHEN FrequencyOf_Purchases = 'Fortnightly' THEN 1 ELSE 0 END) AS Fortnightly_Customers,
-					 SUM(CASE WHEN FrequencyOf_Purchases = 'Quarterly' THEN 1 ELSE 0 END) AS Quarterly_Customers,
+                     SUM(CASE WHEN FrequencyOf_Purchases = 'Quarterly' THEN 1 ELSE 0 END) AS Quarterly_Customers,
                      SUM(CASE WHEN FrequencyOf_Purchases = 'Every 3 Months' THEN 1 ELSE 0 END) AS Every_3_Months_Customers,
                      SUM(CASE WHEN FrequencyOf_Purchases = 'Annually' THEN 1 ELSE 0 END) AS Annual_Customers
 FROM sales_info
