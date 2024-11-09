@@ -6,7 +6,7 @@
 - [Tools](#tools)
 - [Data Cleaning](#data-cleaning)
 - [Exploratory Data Analysis](#exploratory-data-analysis)
-- [Results & Findings](#results--findings)
+- [Results and Findings](#results-and-findings)
 - [Recommendations](#recommendations)
 
 ## Project Overview
@@ -87,7 +87,7 @@ GROUP BY Age_Category
 ORDER BY Weekly_Customers DESC ;
 ```
 
-## Results & Findings
+## Results and Findings
 - There was a total of 3900 purchases made and total sales was $233,081.
 - There were 4 distinct product categories(Clothing, Footwear, Outerwear, Accessories) having 25 items.
 - There were 50 distinct locations where customers made purchases.
