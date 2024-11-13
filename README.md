@@ -10,7 +10,7 @@
 - [Recommendations](#recommendations)
 
 ## Project Overview
-This repository contains Shopping Trends & Customer Behavior Analysis for Marc, a retailer of clothing, footwear, outerwear, accessories. It includes data cleaning, exploratory analysis and visualizations to uncover insights across demographics, product categories & seasonal trends, aiming to optimize sales strategies & enhance customer engagement. Advanced SQL techniques were used for data cleaning and analysis, while Microsoft Power BI was utilized for visualization, creating dynamic and interactive dashboards that highlight shopping trends, customer behavior, and product performance.
+This project involves analysis of Shopping Trends & Customer Behavior Analysis for Marc, a retailer of clothing, footwear, outerwear, accessories. It includes data cleaning, exploratory analysis and visualizations to uncover insights across demographics, product categories & seasonal trends, aiming to optimize sales strategies & enhance customer engagement. Advanced SQL techniques were used for data cleaning and analysis, while Microsoft Power BI was utilized for visualization, creating dynamic and interactive dashboards that highlight shopping trends, customer behavior, and product performance.
 
 ![Dashboard](https://github.com/user-attachments/assets/d2b69ec8-81ca-4157-818f-508cd07a251c)
 
