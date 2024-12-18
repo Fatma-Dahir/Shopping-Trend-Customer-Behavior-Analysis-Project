@@ -1,8 +1,36 @@
 -- DATA CLEANING
--- Check for duplicates
-SELECT Customer_ID, COUNT(*)
+-- Check for null values in all columns
+SELECT 
+    COUNT(*) AS Total_Records,
+    SUM(CASE WHEN Customer_ID IS NULL THEN 1 ELSE 0 END) AS Customer_ID_Null,
+    SUM(CASE WHEN Age IS NULL THEN 1 ELSE 0 END) AS Age_Null,
+    SUM(CASE WHEN Age_Category IS NULL THEN 1 ELSE 0 END) AS Age_Category_Null,
+    SUM(CASE WHEN Gender IS NULL THEN 1 ELSE 0 END) AS Gender_Null,
+    SUM(CASE WHEN Item_Purchased IS NULL THEN 1 ELSE 0 END) AS Item_Purchased_Null,
+    SUM(CASE WHEN Category IS NULL THEN 1 ELSE 0 END) AS Category_Null,
+    SUM(CASE WHEN PurchasedAmount_USD IS NULL THEN 1 ELSE 0 END) AS PurchasedAmount_USD_Null,
+    SUM(CASE WHEN Average_PurchasedAmount IS NULL THEN 1 ELSE 0 END) AS Average_PurchasedAmount_Null,
+    SUM(CASE WHEN Location IS NULL THEN 1 ELSE 0 END) AS Location_Null,
+    SUM(CASE WHEN Size IS NULL THEN 1 ELSE 0 END) AS Size_Null,
+    SUM(CASE WHEN Color IS NULL THEN 1 ELSE 0 END) AS Color_Null,
+    SUM(CASE WHEN Season IS NULL THEN 1 ELSE 0 END) AS Season_Null,
+    SUM(CASE WHEN Review_Rating IS NULL THEN 1 ELSE 0 END) AS Review_Rating_Null,
+    SUM(CASE WHEN Subscription_Status IS NULL THEN 1 ELSE 0 END) AS Subscription_Status_Null,
+    SUM(CASE WHEN Payment_Method IS NULL THEN 1 ELSE 0 END) AS Payment_Method_Null,
+    SUM(CASE WHEN Shipping_Type IS NULL THEN 1 ELSE 0 END) AS Shipping_Type_Null,
+    SUM(CASE WHEN Discount_Applied IS NULL THEN 1 ELSE 0 END) AS Discount_Applied_Null,
+    SUM(CASE WHEN PromoCode_Used IS NULL THEN 1 ELSE 0 END) AS PromoCode_Used_Null,
+    SUM(CASE WHEN Previous_Purchases IS NULL THEN 1 ELSE 0 END) AS Previous_Purchases_Null,
+    SUM(CASE WHEN PreferredPayment_Method IS NULL THEN 1 ELSE 0 END) AS PreferredPayment_Method_Null,
+    SUM(CASE WHEN FrequencyOf_Purchases IS NULL THEN 1 ELSE 0 END) AS FrequencyOf_Purchases_Null
+FROM sales_info;
+
+-- Check for duplicates across all columns
+SELECT *, COUNT(*)
 FROM sales_info
-GROUP BY Customer_ID
+GROUP BY Customer_ID, Age, Age_Category, Gender, Item_Purchased, Category, PurchasedAmount_USD,
+         Average_PurchasedAmount, Location, Size, Color, Season, Review_Rating, Subscription_Status,
+         Payment_Method, Shipping_Type, Discount_Applied, PromoCode_Used, Previous_Purchases, PreferredPayment_Method, FrequencyOf_Purchases
 HAVING COUNT(*) > 1;
 
 -- STANDARDIZE DATA
@@ -45,7 +73,7 @@ ORDER BY 1;
 
 -- DATA ANALYSIS
 -- CUSTOMER BEHAVIOR ANALYSIS
--- How many unique customers are there
+-- How many distinct customers are there?
 SELECT COUNT(DISTINCT Customer_ID) as Customers_Count
 FROM sales_info;
 
@@ -92,15 +120,15 @@ GROUP BY Age_Category
 ORDER BY Number_of_Purchases DESC, Total_Sales DESC;
 
 -- How does the frequency of purchases vary across different age groups?
-SELECT Age_Category, SUM(CASE WHEN FrequencyOf_Purchases = 'Weekly' THEN 1 ELSE 0 END) AS Weekly,
-					 SUM(CASE WHEN FrequencyOf_Purchases = 'Bi-Weekly' THEN 1 ELSE 0 END) AS Bi_Weekly,
-                     SUM(CASE WHEN FrequencyOf_Purchases = 'Fortnightly' THEN 1 ELSE 0 END) AS Fortnightly,
-					 SUM(CASE WHEN FrequencyOf_Purchases = 'Quarterly' THEN 1 ELSE 0 END) AS Quarterly,
-                     SUM(CASE WHEN FrequencyOf_Purchases = 'Every 3 Months' THEN 1 ELSE 0 END) AS Every_3_Months,
-                     SUM(CASE WHEN FrequencyOf_Purchases = 'Annually' THEN 1 ELSE 0 END) AS Annually
+SELECT Age_Category, SUM(CASE WHEN FrequencyOf_Purchases = 'Weekly' THEN 1 ELSE 0 END) AS Weekly_Customers,
+					 SUM(CASE WHEN FrequencyOf_Purchases = 'Bi-Weekly' THEN 1 ELSE 0 END) AS Bi_Weekly_Customers,
+                     SUM(CASE WHEN FrequencyOf_Purchases = 'Fortnightly' THEN 1 ELSE 0 END) AS Fortnightly_Customers,
+					 SUM(CASE WHEN FrequencyOf_Purchases = 'Quarterly' THEN 1 ELSE 0 END) AS Quarterly_Customers,
+                     SUM(CASE WHEN FrequencyOf_Purchases = 'Every 3 Months' THEN 1 ELSE 0 END) AS Every_3_Months_Customers,
+                     SUM(CASE WHEN FrequencyOf_Purchases = 'Annually' THEN 1 ELSE 0 END) AS Annual_Customers
 FROM sales_info
 GROUP BY Age_Category
-ORDER BY Weekly DESC ;
+ORDER BY Weekly_Customers DESC ;
 
 -- Most common to least common interval between purchases (ordering frequency_of_purchases)
 SELECT FrequencyOf_Purchases, COUNT(FrequencyOf_Purchases) AS Count_of_Frequency
@@ -140,7 +168,8 @@ FROM sales_info;
 -- How does the average purchase amount vary across different product categories?
 SELECT Category, ROUND(AVG(PurchasedAmount_USD),2) AS Average_PurchasedAmount
 FROM sales_info
-GROUP BY Category;
+GROUP BY Category
+ORDER BY Average_PurchasedAmount DESC;
 
 -- Which category has the most number of purchases and Total_Sales?
 SELECT Category, COUNT(*) AS Number_of_Purchases, SUM(PurchasedAmount_USD) AS Total_Sales
@@ -178,7 +207,7 @@ GROUP BY Category, Item_Purchased
 ORDER BY Average_rating DESC
 LIMIT 5;
 
--- What are the bottom 5 Product Category & Items' Average Ratings?
+-- What are the bottom 5 Product Category & Items based on Average Ratings?
 SELECT Category, Item_Purchased, ROUND(AVG(Review_Rating),2) AS Average_rating
 FROM sales_info
 GROUP BY Category, Item_Purchased
@@ -230,7 +259,7 @@ SELECT Shipping_Type, COUNT(*) AS Number_of_Customers,
  GROUP BY Shipping_Type
  ORDER BY Number_of_customers DESC, Total_Sales DESC;
 
--- How does the presence of a discount affect the purchase decision of customers?
+-- How does the presence of a discount influence the purchase decision of male and female customers?
 SELECT Discount_Applied, Gender, COUNT(*) as Number_of_Purchases
 FROM sales_info
 GROUP BY Discount_Applied, Gender;
